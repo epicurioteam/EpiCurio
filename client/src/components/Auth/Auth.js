@@ -12,6 +12,9 @@ import useStyles from "./styles";
 import Input from "./Input";
 import jwt_decode from "jwt-decode";
 import authReducer from "../../reducers/auth";
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider, useDispatch } from "react-redux";
+import { signin, signup } from "../../actions/auth";
 
 import Icon from "./icon";
 
@@ -25,14 +28,25 @@ const AuthWrapper = () => {
   );
 };
 
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
 const Auth = ({ setUser }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isSignup, setIsSignup] = useState(false);
+  //user data for when client logs In
+  const [formData, setFormData] = useState(initialState);
 
   const switchMode = () => {
-    setIsSignUp((prevIsSignUp) => !prevIsSignUp);
+    setIsSignup((prevIsSignup) => !prevIsSignup);
     handleShowPassword(false);
   };
 
@@ -85,10 +99,10 @@ const Auth = ({ setUser }) => {
         <Avatar className={classes.avatar}>
           <LockOutLinedIcon />
         </Avatar>
-        <Typography variant="h5">{isSignUp ? "Sign Up" : "Sign In"}</Typography>
+        <Typography variant="h5">{isSignup ? "Sign Up" : "Sign In"}</Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            {isSignUp && (
+            {isSignup && (
               <>
                 {/* Create new custom component that generalizes the logic
                 <TextField name='firstName' label='First Name' handleChange={handleChange} autoFocus xs={6}/>
@@ -124,7 +138,7 @@ const Auth = ({ setUser }) => {
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
             />
-            {isSignUp && (
+            {isSignup && (
               <Input
                 name="confirmPassword"
                 label="Repeat Password"
@@ -141,7 +155,7 @@ const Auth = ({ setUser }) => {
             className={classes.submit}
           >
             {" "}
-            {isSignUp ? "Sign Up" : "Sign In"}{" "}
+            {isSignup ? "Sign Up" : "Sign In"}{" "}
           </Button>
           <div id="signInDiv"></div>
           {/* <GoogleLogin
@@ -166,7 +180,7 @@ const Auth = ({ setUser }) => {
 
           <Grid container justifyContent="flex-end">
             <Button onClick={switchMode}>
-              {isSignUp
+              {isSignup
                 ? "Already have an account? Sign In!"
                 : "Don't have an account? Sign Up!"}
             </Button>

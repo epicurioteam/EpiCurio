@@ -7,3 +7,5 @@ const router = express.Router();
 //send data to backend. the form send data to the backend
 router.post("/signin", signin);
 router.post("/signup", signup);
+
+export default router;
