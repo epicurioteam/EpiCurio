@@ -9,8 +9,8 @@ import {
 } from "@material-ui/core";
 import LockOutLinedIcon from "@material-ui/icons/LockOutlined";
 import useStyles from "./styles";
-import Input from "./Input"; 
-import jwt_decode from 'jwt-decode';
+import Input from "./Input";
+import jwt_decode from "jwt-decode";
 
 import Icon from "./icon";
 
@@ -20,16 +20,26 @@ const Auth = ({ setUser }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
 
-  const handleShowPassword = () =>
-    setShowPassword((prevShowPassword) => !prevShowPassword);
-
-  const handleSubmit = () => {};
-
-  const handleChange = () => {};
-
   const switchMode = () => {
     setIsSignUp((prevIsSignUp) => !prevIsSignUp);
     handleShowPassword(false);
+  };
+
+  const handleShowPassword = () =>
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //two cases 1. sign up button action. 2. sign in action
+    if (isSignup) {
+      dispatch(signup(formData, history));
+    } else {
+      dispatch(signin(formData, history));
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   // const googleSuccess = async (res) => {
@@ -41,19 +51,22 @@ const Auth = ({ setUser }) => {
   //   console.log(error);
   // }
 
-  const handleCallbackResponse = (res) => { 
+  const handleCallbackResponse = (res) => {
     const token = res.credentials;
     const userObj = jwt_decode(token);
-   }
+  };
 
   useEffect(() => {
     google.accounts.id.initialize({
-      client_id: '99631309615-cin2nns79btd1sv70s5op2bb64eb1nhg.apps.googleusercontent.com', 
-      callback: handleCallbackResponse
+      client_id:
+        "99631309615-cin2nns79btd1sv70s5op2bb64eb1nhg.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
     });
 
-    google.accounts.id.renderButton(document.getElementById('signInDiv'), { theme: 'outline '});
-  }, [])
+    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+      theme: "outline ",
+    });
+  }, []);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -114,11 +127,12 @@ const Auth = ({ setUser }) => {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}>
+            className={classes.submit}
+          >
             {" "}
             {isSignUp ? "Sign Up" : "Sign In"}{" "}
           </Button>
-          <div id='signInDiv'></div>
+          <div id="signInDiv"></div>
           {/* <GoogleLogin
             render={(renderProps) => (
               <Button
