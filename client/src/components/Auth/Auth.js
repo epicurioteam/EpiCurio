@@ -11,8 +11,19 @@ import LockOutLinedIcon from "@material-ui/icons/LockOutlined";
 import useStyles from "./styles";
 import Input from "./Input";
 import jwt_decode from "jwt-decode";
+import authReducer from "../../reducers/auth";
 
 import Icon from "./icon";
+
+const AuthWrapper = () => {
+  const store = configureStore({ reducer: authReducer });
+
+  return (
+    <Provider store={store}>
+      <Auth />
+    </Provider>
+  );
+};
 
 const Auth = ({ setUser }) => {
   const classes = useStyles();
@@ -166,4 +177,4 @@ const Auth = ({ setUser }) => {
   );
 };
 
-export default Auth;
+export default AuthWrapper;
