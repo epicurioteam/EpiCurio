@@ -11,14 +11,12 @@ import { useState, useEffect } from "react";
 
 const App = () => {
 
-  const [user, setUser] = useState({});
-
   return (
     <BrowserRouter>
-      <Container maxWidth="lg">{/* NavBar always show*/}
+      <Container maxWidth="lg">
         <Routes>
-          <Route path="/" element={<Auth setUser={setUser}/>} />
-          <Route path="/auth" element={<Home/>} />
+          <Route path="/" element={<Auth/>} />
+          <Route path="/home" element={<Home/>} />
         </Routes>
       </Container>
     </BrowserRouter>

@@ -6,7 +6,7 @@ import { getPosts } from '../../actions/posts';
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
 import useStyles from './styles';
-import Navbar from '../Navbar/Navbar';
+import NavBar from '../Navbar/Navbar';
 
 
 const Home = () => {

@@ -11,14 +11,19 @@ import LockOutLinedIcon from "@material-ui/icons/LockOutlined";
 import useStyles from "./styles";
 import Input from "./Input"; 
 import jwt_decode from 'jwt-decode';
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'; // import { useHistory } from 'react-router-dom';
 
 import Icon from "./icon";
+import { AUTH } from "../../constants/actionTypes";
 
-const Auth = ({ setUser }) => {
+const Auth = () => {
   const classes = useStyles();
 
   const [showPassword, setShowPassword] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // history = useHistory(); 
 
   const handleShowPassword = () =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -41,19 +46,36 @@ const Auth = ({ setUser }) => {
   //   console.log(error);
   // }
 
-  const handleCallbackResponse = (res) => { 
-    const token = res.credentials;
-    const userObj = jwt_decode(token);
+  const handleCallbackResponse = async (res) => { 
+    const token = res?.credential;
+    const result = jwt_decode(token);
+    
+    try {
+      dispatch({ type: AUTH, data: { result, token }});
+      navigate('/home');
+    } catch (error) {
+      console.log(error);
+    }
    }
 
+   
   useEffect(() => {
-    google.accounts.id.initialize({
-      client_id: '99631309615-cin2nns79btd1sv70s5op2bb64eb1nhg.apps.googleusercontent.com', 
-      callback: handleCallbackResponse
-    });
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+    script.onload = () => {
+        google.accounts.id.initialize({
+          client_id: '99631309615-cin2nns79btd1sv70s5op2bb64eb1nhg.apps.googleusercontent.com', 
+          callback: handleCallbackResponse
+        });
+    
+        google.accounts.id.renderButton(document.getElementById('signInDiv'), { theme: 'outline ', size: 'medium' } );
+    };
+  }, []);
 
-    google.accounts.id.renderButton(document.getElementById('signInDiv'), { theme: 'outline '});
-  }, [])
+  
 
   return (
     <Container component="main" maxWidth="xs">
@@ -118,7 +140,7 @@ const Auth = ({ setUser }) => {
             {" "}
             {isSignUp ? "Sign Up" : "Sign In"}{" "}
           </Button>
-          <div id='signInDiv'></div>
+          <div id='signInDiv'  style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}></div>
           {/* <GoogleLogin
             render={(renderProps) => (
               <Button
