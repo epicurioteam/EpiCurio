@@ -13,28 +13,64 @@ import Input from "./Input";
 import jwt_decode from 'jwt-decode';
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'; // import { useHistory } from 'react-router-dom';
+import Input from "./Input";
+import jwt_decode from "jwt-decode";
+import authReducer from "../../reducers/auth";
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider, useDispatch } from "react-redux";
+import { signin, signup } from "../../actions/auth";
 
 import Icon from "./icon";
 import { AUTH } from "../../constants/actionTypes";
 
+const AuthWrapper = () => {
+  const store = configureStore({ reducer: authReducer });
+
+  return (
+    <Provider store={store}>
+      <Auth />
+    </Provider>
+  );
+};
+
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
 const Auth = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
-  const dispatch = useDispatch();
   const navigate = useNavigate(); // history = useHistory(); 
+  const [isSignup, setIsSignup] = useState(false);
+  //user data for when client logs In
+  const [formData, setFormData] = useState(initialState);
+
+  const switchMode = () => {
+    setIsSignup((prevIsSignup) => !prevIsSignup);
+    handleShowPassword(false);
+  };
 
   const handleShowPassword = () =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //two cases 1. sign up button action. 2. sign in action
+    if (isSignup) {
+      dispatch(signup(formData, history));
+    } else {
+      dispatch(signin(formData, history));
+    }
+  };
 
-  const handleChange = () => {};
-
-  const switchMode = () => {
-    setIsSignUp((prevIsSignUp) => !prevIsSignUp);
-    handleShowPassword(false);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   // const googleSuccess = async (res) => {
@@ -83,10 +119,10 @@ const Auth = () => {
         <Avatar className={classes.avatar}>
           <LockOutLinedIcon />
         </Avatar>
-        <Typography variant="h5">{isSignUp ? "Sign Up" : "Sign In"}</Typography>
+        <Typography variant="h5">{isSignup ? "Sign Up" : "Sign In"}</Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            {isSignUp && (
+            {isSignup && (
               <>
                 {/* Create new custom component that generalizes the logic
                 <TextField name='firstName' label='First Name' handleChange={handleChange} autoFocus xs={6}/>
@@ -122,7 +158,7 @@ const Auth = () => {
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
             />
-            {isSignUp && (
+            {isSignup && (
               <Input
                 name="confirmPassword"
                 label="Repeat Password"
@@ -136,9 +172,10 @@ const Auth = () => {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}>
+            className={classes.submit}
+          >
             {" "}
-            {isSignUp ? "Sign Up" : "Sign In"}{" "}
+            {isSignup ? "Sign Up" : "Sign In"}{" "}
           </Button>
           <div id='signInDiv'  style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}></div>
           {/* <GoogleLogin
@@ -163,7 +200,7 @@ const Auth = () => {
 
           <Grid container justifyContent="flex-end">
             <Button onClick={switchMode}>
-              {isSignUp
+              {isSignup
                 ? "Already have an account? Sign In!"
                 : "Don't have an account? Sign Up!"}
             </Button>
@@ -174,4 +211,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default AuthWrapper;
