@@ -53,6 +53,8 @@ const Auth = () => {
   const [formData, setFormData] = useState(initialState);
   const wrongPassword = useSelector((state) => state.wrongPassword);
   const nonExistUser = useSelector((state) => state.nonExistUser);
+  const passwordNotMatch = useSelector((state) => state.passwordNotMatch);
+  const userExists = useSelector((state) => state.userExists);
 
   const switchMode = () => {
     setIsSignup((prevIsSignup) => !prevIsSignup);
@@ -195,13 +197,36 @@ const Auth = () => {
                 type="password"
               />
             )}
+            {passwordNotMatch && (
+              // <Alert severity="error">
+              //   <AlertTitle>Error</AlertTitle>
+              //   Incorrect Password
+              //   Please check your password and try again.
+              // </Alert>
+              <AuthWarning
+                className={classes.passwordWarning}
+                message="Passwords do not match. Please try again!"
+              />
+            )}
+            {userExists && (
+              // <Alert severity="error">
+              //   <AlertTitle>Error</AlertTitle>
+              //   Incorrect Password
+              //   Please check your password and try again.
+              // </Alert>
+              <AuthWarning
+                className={classes.passwordWarning}
+                message="User already exists. Please try logging in!"
+              />
+            )}
           </Grid>
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}>
+            className={classes.submit}
+          >
             {" "}
             {isSignup ? "Sign Up" : "Sign In"}{" "}
           </Button>
