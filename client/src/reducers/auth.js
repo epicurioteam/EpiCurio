@@ -86,6 +86,7 @@ const authReducer = (
         wrongPassword: false,
         nonExistUser: false,
       };
+
     default:
       return state;
   }
