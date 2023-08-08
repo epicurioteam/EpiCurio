@@ -20,7 +20,7 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 
 import Icon from "./icon";
-import { AUTH } from "../../constants/actionTypes";
+import { AUTH, SWITCH_IS_SIGN_UP } from "../../constants/actionTypes";
 import Warning from "./AuthWarning";
 import AuthWarning from "./AuthWarning";
 
@@ -48,7 +48,7 @@ const Auth = () => {
   const navigate = useNavigate(); // history = useHistory();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [isSignup, setIsSignup] = useState(false);
+  const isSignup = useSelector((state) => state.isSignup);
   //user data for when client logs In
   const [formData, setFormData] = useState(initialState);
   const wrongPassword = useSelector((state) => state.wrongPassword);
@@ -57,19 +57,18 @@ const Auth = () => {
   const userExists = useSelector((state) => state.userExists);
 
   const switchMode = () => {
-    setIsSignup((prevIsSignup) => !prevIsSignup);
+    dispatch({ type: SWITCH_IS_SIGN_UP })
     handleShowPassword(false);
   };
 
   const handleShowPassword = () =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     //two cases 1. sign up button action. 2. sign in action
     if (isSignup) {
       dispatch(signup(formData, navigate));
-      switchMode();
     } else {
       dispatch(signin(formData, navigate));
     }

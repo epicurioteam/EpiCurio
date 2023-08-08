@@ -4,7 +4,7 @@ import { Switch } from "react-router";
 
 import NavBar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
-import Auth from "./components/Auth/Auth";
+import AuthWrapper from "./components/Auth/Auth"; // AuthWrapper
 import { useState, useEffect } from "react";
 
 // what lies in curly braces are JavaScript functions. They can be used the same as HTML mark-up components
@@ -15,7 +15,7 @@ const App = () => {
     <BrowserRouter>
       <Container maxWidth="lg">
         <Routes>
-          <Route path="/" element={<Auth/>} />
+          <Route path="/" element={<AuthWrapper/>} />
           <Route path="/home" element={<Home/>} />
         </Routes>
       </Container>
