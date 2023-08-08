@@ -27,14 +27,17 @@ const authReducer = (
       //save in local storage so won't forget user'
       localStorage.setItem("profile", JSON.stringify({ ...action?.data }));
       return { ...state, authData: action?.data };
+
     case FAILED_LOGIN:
       if (action.payload === wrongPassword) {
         return { ...state, wrongPassword: true, nonExistUser: false };
       } else return { ...state, nonExistUser: true, wrongPassword: false };
+
     case FAILED_SIGNUP:
       if (action.payload === passwordNotMatch) {
-        return { ...state, passwordNotMatch: true };
-      } else return { ...state, userExists: true };
+        return { ...state, passwordNotMatch: true, userExists: false };
+      } else return { ...state, userExists: true, passwordNotMatch: false };
+
     //logout clear local storage
     case LOGOUT: // used the same as a refresh state action
       localStorage.clear();
@@ -44,6 +47,7 @@ const authReducer = (
         wrongPassword: false,
         nonExistUser: false,
       };
+
     default:
       return state;
   }
