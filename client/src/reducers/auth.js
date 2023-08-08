@@ -30,13 +30,39 @@ const authReducer = (
 
     case FAILED_LOGIN:
       if (action.payload === wrongPassword) {
-        return { ...state, wrongPassword: true, nonExistUser: false };
-      } else return { ...state, nonExistUser: true, wrongPassword: false };
+        return {
+          ...state,
+          wrongPassword: true,
+          nonExistUser: false,
+          userExists: false,
+          passwordNotMatch: false,
+        };
+      } else
+        return {
+          ...state,
+          nonExistUser: true,
+          wrongPassword: false,
+          userExists: false,
+          passwordNotMatch: false,
+        };
 
     case FAILED_SIGNUP:
       if (action.payload === passwordNotMatch) {
-        return { ...state, passwordNotMatch: true, userExists: false };
-      } else return { ...state, userExists: true, passwordNotMatch: false };
+        return {
+          ...state,
+          passwordNotMatch: true,
+          userExists: false,
+          wrongPassword: false,
+          nonExistUser: false,
+        };
+      } else
+        return {
+          ...state,
+          userExists: true,
+          passwordNotMatch: false,
+          wrongPassword: false,
+          nonExistUser: false,
+        };
 
     //logout clear local storage
     case LOGOUT: // used the same as a refresh state action
