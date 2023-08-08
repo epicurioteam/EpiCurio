@@ -16,8 +16,10 @@ export const signin = (formData, navigate) => async (dispatch) => {
     switch (error.request.status) {
       case 400:
         dispatch({ type: FAILED_AUTH, payload: wrongPassword});
+        break;
       case 404:
         dispatch({ type: FAILED_AUTH, payload: nonExistUser});
+        break;
       default:
         break;
     }

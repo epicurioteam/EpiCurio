@@ -164,7 +164,7 @@ const Auth = () => {
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
             />
-            {(wrongPassword) && (
+            {wrongPassword && (
               // <Alert severity="error">
               //   <AlertTitle>Error</AlertTitle>
               //   Incorrect Password
@@ -175,7 +175,7 @@ const Auth = () => {
                 message="You've entered the incorrect password. Please try again!"
               />
             )}
-            {(nonExistUser) && (
+            {nonExistUser && (
               // <Alert severity="error">
               //   <AlertTitle>Error</AlertTitle>
               //   Incorrect Password
