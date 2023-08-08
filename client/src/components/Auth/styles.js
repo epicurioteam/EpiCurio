@@ -24,7 +24,14 @@ export default makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  googleButton: {
-    marginBottom: theme.spacing(2),
+
+  passwordWarning: {
+    display: 'flex',
+    color: '#f02849',
+    fontFamily: 'SFProText-Regular, Helvetica, Arial, sans-serif',
+    fontSize: '13px',
+    lineHeight: '16px',
+    marginTop: '8px',
+    justifyContent: 'center',
   },
 }));

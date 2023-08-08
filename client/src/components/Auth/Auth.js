@@ -9,19 +9,20 @@ import {
 } from "@material-ui/core";
 import LockOutLinedIcon from "@material-ui/icons/LockOutlined";
 import useStyles from "./styles";
-import Input from "./Input"; 
-import jwt_decode from 'jwt-decode';
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'; // import { useHistory } from 'react-router-dom';
 import Input from "./Input";
-import jwt_decode from "jwt-decode";
+// import jwt_decode from "jwt-decode";
+import { useNavigate } from "react-router-dom"; // import { useHistory } from 'react-router-dom';
 import authReducer from "../../reducers/auth";
 import { configureStore } from "@reduxjs/toolkit";
-import { Provider, useDispatch } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { signin, signup } from "../../actions/auth";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 import Icon from "./icon";
 import { AUTH } from "../../constants/actionTypes";
+import Warning from "./AuthWarning";
+import AuthWarning from "./AuthWarning";
 
 const AuthWrapper = () => {
   const store = configureStore({ reducer: authReducer });
@@ -44,12 +45,14 @@ const initialState = {
 const Auth = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // history = useHistory();
 
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate(); // history = useHistory(); 
   const [isSignup, setIsSignup] = useState(false);
   //user data for when client logs In
   const [formData, setFormData] = useState(initialState);
+  const wrongPassword = useSelector((state) => state.wrongPassword);
+  const nonExistUser = useSelector((state) => state.nonExistUser);
 
   const switchMode = () => {
     setIsSignup((prevIsSignup) => !prevIsSignup);
@@ -63,9 +66,9 @@ const Auth = () => {
     e.preventDefault();
     //two cases 1. sign up button action. 2. sign in action
     if (isSignup) {
-      dispatch(signup(formData, history));
+      dispatch(signup(formData, navigate));
     } else {
-      dispatch(signin(formData, history));
+      dispatch(signin(formData, navigate));
     }
   };
 
@@ -82,37 +85,40 @@ const Auth = () => {
   //   console.log(error);
   // }
 
-  const handleCallbackResponse = async (res) => { 
-    const token = res?.credential;
-    const result = jwt_decode(token);
-    
-    try {
-      dispatch({ type: AUTH, data: { result, token }});
-      navigate('/home');
-    } catch (error) {
-      console.log(error);
-    }
-   }
+  // const handleCallbackResponse = async (res) => {
+  //   const token = res?.credential;
+  //   const result = jwt_decode(token);
 
-   
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://accounts.google.com/gsi/client';
-    script.async = true;
-    script.defer = true;
-    document.head.appendChild(script);
-    script.onload = () => {
-        google.accounts.id.initialize({
-          client_id: '99631309615-cin2nns79btd1sv70s5op2bb64eb1nhg.apps.googleusercontent.com', 
-          callback: handleCallbackResponse
-        });
-    
-        google.accounts.id.renderButton(document.getElementById('signInDiv'), { theme: 'outline ', size: 'medium' } );
-    };
-  }, []);
+  //   try {
+  //     dispatch({ type: AUTH, data: { result, token } });
+  //     navigate("/home");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  
+  // useEffect(() => {
+  //   const script = document.createElement("script");
+  //   script.src = "https://accounts.google.com/gsi/client";
+  //   script.async = true;
+  //   script.defer = true;
+  //   document.head.appendChild(script);
+  //   script.onload = () => {
+  //     google.accounts.id.initialize({
+  //       client_id:
+  //         "99631309615-cin2nns79btd1sv70s5op2bb64eb1nhg.apps.googleusercontent.com",
+  //       callback: handleCallbackResponse,
+  //     });
 
+  //     google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+  //       theme: "outline ",
+  //       size: "medium",
+  //     });
+  //   };
+  // }, []);
+
+  console.log(wrongPassword);
+  console.log(nonExistUser);
   return (
     <Container component="main" maxWidth="xs">
       <Paper className={classes.paper} elevation={3}>
@@ -158,6 +164,28 @@ const Auth = () => {
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
             />
+            {(wrongPassword) && (
+              // <Alert severity="error">
+              //   <AlertTitle>Error</AlertTitle>
+              //   Incorrect Password
+              //   Please check your password and try again.
+              // </Alert>
+              <AuthWarning
+                className={classes.passwordWarning}
+                message="You've entered the incorrect password. Please try again!"
+              />
+            )}
+            {(nonExistUser) && (
+              // <Alert severity="error">
+              //   <AlertTitle>Error</AlertTitle>
+              //   Incorrect Password
+              //   Please check your password and try again.
+              // </Alert>
+              <AuthWarning
+                className={classes.passwordWarning}
+                message="The email you entered isn't connected to an account"
+              />
+            )}
             {isSignup && (
               <Input
                 name="confirmPassword"
@@ -172,12 +200,20 @@ const Auth = () => {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
-          >
+            className={classes.submit}>
             {" "}
             {isSignup ? "Sign Up" : "Sign In"}{" "}
           </Button>
-          <div id='signInDiv'  style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}></div>
+
+          {/* Google Login - Defered */}
+          {/* <div
+            id="signInDiv"
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              display: "flex",
+            }}></div> */}
+
           {/* <GoogleLogin
             render={(renderProps) => (
               <Button
@@ -198,7 +234,7 @@ const Auth = () => {
             onError={googleFailure}
           /> */}
 
-          <Grid container justifyContent="flex-end">
+          <Grid container justifyContent="center">
             <Button onClick={switchMode}>
               {isSignup
                 ? "Already have an account? Sign In!"
