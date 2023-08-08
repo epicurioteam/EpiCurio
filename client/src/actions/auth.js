@@ -1,4 +1,4 @@
-import { AUTH, FAILED_AUTH, LOGOUT } from "../constants/actionTypes";
+import { AUTH, FAILED_LOGIN, LOGOUT } from "../constants/actionTypes";
 import * as api from "../api/index.js";
 import { nonExistUser, wrongPassword } from "../constants/authErrorTypes";
 
@@ -15,10 +15,10 @@ export const signin = (formData, navigate) => async (dispatch) => {
     console.log(error);
     switch (error.request.status) {
       case 400:
-        dispatch({ type: FAILED_AUTH, payload: wrongPassword});
+        dispatch({ type: FAILED_LOGIN, payload: wrongPassword});
         break;
       case 404:
-        dispatch({ type: FAILED_AUTH, payload: nonExistUser});
+        dispatch({ type: FAILED_LOGIN, payload: nonExistUser});
         break;
       default:
         break;
@@ -31,8 +31,7 @@ export const signup = (formData, navigate) => async (dispatch) => {
   try {
     //sign up the user
     const { data } = await api.signUp(formData);
-    dispatch({ type: AUTH, data });
-    navigate('/'); 
+    dispatch({ type: AUTH, data }); 
   } catch (error) {
     console.log(error);
   }

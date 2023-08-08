@@ -1,4 +1,4 @@
-import { AUTH, LOGOUT, FAILED_AUTH } from "../constants/actionTypes";
+import { AUTH, LOGOUT, FAILED_LOGIN } from "../constants/actionTypes";
 import { wrongPassword, nonExistUser } from "../constants/authErrorTypes";
 
 const authReducer = (state = { authData: null, wrongPassword: false, nonExistUser: false }, action) => {
@@ -8,7 +8,7 @@ const authReducer = (state = { authData: null, wrongPassword: false, nonExistUse
       //save in local storage so won't forget user'
       localStorage.setItem("profile", JSON.stringify({ ...action?.data }));
       return { ...state, authData: action?.data };
-    case FAILED_AUTH: 
+    case FAILED_LOGIN: 
       if (action.payload === wrongPassword) {
         return { ...state, wrongPassword: true, nonExistUser: false};
       }
