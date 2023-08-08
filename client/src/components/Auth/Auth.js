@@ -67,6 +67,7 @@ const Auth = () => {
     //two cases 1. sign up button action. 2. sign in action
     if (isSignup) {
       dispatch(signup(formData, navigate));
+      switchMode();
     } else {
       dispatch(signin(formData, navigate));
     }
