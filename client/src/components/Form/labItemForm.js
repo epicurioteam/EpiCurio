@@ -38,6 +38,7 @@ const LabItemForm = () => {
 
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
+    // console.log(category);
     dispatch(fetchCategoryFields(category));
   };
 
