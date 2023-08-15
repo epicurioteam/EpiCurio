@@ -1,6 +1,7 @@
 import { Container } from "@material-ui/core";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Switch } from "react-router";
+import LabItemForm from "./components/Form/labItemForm";
 
 import NavBar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
@@ -17,6 +18,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<AuthWrapper/>} />
           <Route path="/home" element={<Home/>} />
+          <Route path="/form" element={<LabItemForm/>}/>
         </Routes>
       </Container>
     </BrowserRouter>

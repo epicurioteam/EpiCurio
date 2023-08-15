@@ -4,13 +4,14 @@ import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import { useDispatch } from 'react-redux';
 import useStyles from './styles';
+import { fetchCategoryFields } from '../../actions/labItem.js';
 
 import { updatePost, createPost } from '../../actions/posts'; // needs to look at actions
 
 
 const LabItemForm = () => {
   const [category, setCategory] = useState('');
-  const [logData, setLogData] = useState({
+  const [formData, setFormData] = useState({
     name: '',
     unit_quantity: '',
     location: '',
@@ -25,7 +26,7 @@ const LabItemForm = () => {
   const dispatch = useDispatch();
 
   const clear = () => {
-    setLogData({ name: '',
+    setFormData({ name: '',
     unit_quantity: '',
     location: '',
     shelf_life: '',
@@ -37,6 +38,7 @@ const LabItemForm = () => {
 
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
+    dispatch(fetchCategoryFields(category));
   };
 
   const handleInputChange = (event) => {
@@ -47,37 +49,15 @@ const LabItemForm = () => {
     }));
   };
 
-  const renderAdditionalFields = () => {
-    if (!category) {
-      return null; // No additional fields if no category selected
-    }
-
-    const categorySchema = mongoose.model(category);
-    const schemaPaths = Object.keys(categorySchema.schema.paths);
-
-    return schemaPaths
-      .filter((path) => path !== '_id' && path !== '__v') // Exclude common fields
-      .map((path) => (
-        <div key={path}>
-          <input
-            type="text"
-            name={path}
-            placeholder={path}
-            onChange={handleInputChange}
-          />
-        </div>
-      ));
-  };
-
   return (
     <form>
       <div>
         <label htmlFor="category">Category:</label>
         <select id="category" name="category" value={category} onChange={handleCategoryChange}>
           <option value="">Select a category</option>
-          <option value="Chemical">Chemical</option>
-          <option value="Equipment">Equipment</option>
-          <option value="Consumable">Consumable</option>
+          <option value="glassPlasticWare">glassPlasticWare</option>
+          <option value="electronics">electronics</option>
+          <option value="safetyEquipment">safetyEquipment</option>
         </select>
       </div>
       <div>
@@ -98,7 +78,7 @@ const LabItemForm = () => {
           onChange={handleInputChange}
         />
       </div>
-      {renderAdditionalFields()}
+      {/* {renderAdditionalFields()} */}
       <button type="submit">Submit</button>
     </form>
   );

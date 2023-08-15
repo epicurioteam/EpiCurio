@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 // import routes
 import postRoutes from "./routes/posts.js";
 import userRoutes from "./routes/users.js";
+import itemRoutes from './routes/labItem.js';
 
 const app = express();
 
@@ -24,6 +25,9 @@ app.use("/posts", postRoutes);
 dotenv.config();
 
 app.use("/user", userRoutes);
+
+// item route
+app.use('/item', itemRoutes);
 
 const CONNECTION_URL = process.env.CONNECTION_URL;
 

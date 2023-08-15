@@ -1,10 +1,9 @@
-import mongoose from 'mongoose';
-import electronics from './electronics';
-import glassPlasticWare from './glassPlasticWare';
-import safetyEquipment from './safetyEquipment';
+import electronics from "./electronics.js";
+import glassPlasticWare from './glassPlasticWare.js';
+import safetyEquipment from './safetyEquipment.js';
 
 export default {
-    electronics,
-    glassPlasticWare,
-    safetyEquipment
+    glassPlasticWare: glassPlasticWare,
+    electronics: electronics,
+    safetyEquipment: safetyEquipment,
 }

@@ -2,6 +2,8 @@ import axios from "axios";
 
 const url = "http://localhost:5000/posts";
 
+const urlItem = "http://localhost:5000/item";
+
 export const signIn = (formData) => axios.post("/user/signin", formData);
 
 export const signUp = (formData) => axios.post("/user/signup", formData);
@@ -16,3 +18,5 @@ export const updatePost = (id, updatedPost) =>
 export const deletePost = (id) => axios.delete(`${url}/${id}`);
 
 export const likePost = (id) => axios.patch(`${url}/${id}/likePost`);
+
+export const fetchCategoryFields = (category) => axios.get(`${urlItem}/${category}`);

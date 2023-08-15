@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import * as labItemCategories from '../../client/src/constants/labItemCategory';
-import labItemCategorySchemas from './labCategorySchemas/labCategories';
+import * as labItemCategories from '../constants/labItemCategory.js'
+import labItemCategorySchemas from './labCategorySchemas/labCategories.js';
 
 const labItemSchema= mongoose.Schema({
 
