@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import posts from './posts';
 import auth from './auth';
+import labItem from "./labItem";
 
 /*
     combine all reducers into one root reducers through key-value pairs
@@ -10,5 +11,6 @@ import auth from './auth';
 
 export default combineReducers({
     posts, 
-    auth 
+    auth,
+    labItem
 });

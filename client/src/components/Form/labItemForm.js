@@ -38,9 +38,14 @@ const LabItemForm = () => {
 
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
-    // console.log(category);
-    dispatch(fetchCategoryFields(category));
   };
+  
+  useEffect(() => {
+    if (category) {
+      dispatch(fetchCategoryFields(category));
+    }
+  }, [category, dispatch]);
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -55,7 +60,7 @@ const LabItemForm = () => {
       <div>
         <label htmlFor="category">Category:</label>
         <select id="category" name="category" value={category} onChange={handleCategoryChange}>
-          <option value="">Select a category</option>
+          <option disabled>Select a category</option>
           <option value="glassPlasticWare">glassPlasticWare</option>
           <option value="electronics">electronics</option>
           <option value="safetyEquipment">safetyEquipment</option>

@@ -5,8 +5,7 @@ export const fetchCategoryFields = (category) => async (dispatch) => {
         console.log(category);
         const categoryFields  = await api.fetchCategoryFields(category);
 
-        console.log(categoryFields); // undefined
-        dispatch({});
+        dispatch({ type: 'FETCH_ITEM_FIELDS', payload: categoryFields });
     } catch (error) {
         console.log(error);
     }

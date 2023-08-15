@@ -23,7 +23,6 @@ const authReducer = (
   },
   action
 ) => {
-  console.log(state);
   switch (action.type) {
     case SWITCH_IS_SIGN_UP:
       return { ...state, isSignup: !state.isSignup };
