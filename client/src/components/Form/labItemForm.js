@@ -88,17 +88,20 @@ const LabItemForm = () => {
         </div>
 
         {/* render the fields returned by the category */}
+        {console.log(fields)}
         {fields
           .filter((field) => field !== "_id" && field !== "__v")
-          .map((field) => (
+          .map((field) => {
+            console.log(field);
+
             <div key={`${field}`}>
               <Input
                 type="string"
                 name={`${field}`}
                 handleChange={handleInputChange}
               />
-            </div>
-          ))}
+            </div>;
+          })}
       </Grid>
       {/* {renderAdditionalFields()} */}
       <button type="submit">Submit</button>

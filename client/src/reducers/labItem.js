@@ -15,10 +15,8 @@ export default (
 ) => {
   switch (action.type) {
     case "FETCH_ITEM_FIELDS":
-      return [...itemFields, action.payload];
-    default: 
-        return itemFields;
+      return action.payload;
+    default:
+      return itemFields;
   }
 };
-
-
