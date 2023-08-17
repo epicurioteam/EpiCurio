@@ -15,9 +15,7 @@ export default (
   switch (action.type) {
     case "FETCH_ITEM_FIELDS":
       return action.payload;
-    default: 
-        return itemFields;
+    default:
+      return itemFields;
   }
 };
-
-
