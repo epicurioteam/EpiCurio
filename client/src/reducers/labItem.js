@@ -1,5 +1,5 @@
 export default (
-  itemFields = [
+  itemFields = 
     {
       name: "",
       unit_quantity: "",
@@ -9,13 +9,12 @@ export default (
       description: "",
       category: "",
       creator: "",
-    },
-  ],
+    }, 
   action
 ) => {
   switch (action.type) {
     case "FETCH_ITEM_FIELDS":
-      return [...itemFields, action.payload];
+      return action.payload;
     default: 
         return itemFields;
   }

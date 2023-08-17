@@ -10,6 +10,7 @@ import { updatePost, createPost } from '../../actions/posts'; // needs to look a
 
 
 const LabItemForm = () => {
+  const fields = useSelector((state) => (state.itemFields));
   const [category, setCategory] = useState('');
   const [formData, setFormData] = useState({
     name: '',

@@ -12,5 +12,4 @@ import labItem from "./labItem";
 export default combineReducers({
     posts, 
     auth,
-    labItem
 });
