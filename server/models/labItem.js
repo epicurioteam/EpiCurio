@@ -35,6 +35,7 @@ const labItemSchema= mongoose.Schema({
 // Create subschemas corresponding to the lab item categories
 for (const categoryName in labItemCategorySchemas) {
     const categorySchema = labItemCategorySchemas[categoryName];
+    // categorySchema = mongoose.schema(category.categoryDefinition);
     labItemSchema.discriminator(categoryName, categorySchema);
 }
 

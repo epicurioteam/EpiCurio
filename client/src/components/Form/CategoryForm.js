@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from 'react-redux'
 import {
   Avatar,
   Button,
@@ -9,20 +10,36 @@ import {
 } from "@material-ui/core";
 import Input from "../Auth/Input.js";
 import useStyles from "../Auth/styles";
+import { createCategory } from "../../actions/admin.js";
 
 const CategoryForm = () => {
+  const [formData, setFormData] = useState({ categoryName: '', categoryDefinition: {}});
   const [attributes, setAttributes] = useState([]);
 
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const addAttribute = () => {
     const newAttribute = { name: '', type: '' };
     setAttributes([...attributes, newAttribute]);
   };
 
-  const handleChange = () => {};
+  const handleNameChange = (value) => {
+    const updatedName = value;
+    setFormData({...formData, categoryName: `${updatedName}`});
+  }
 
-  const handleSubmit = () => {};
+  const handleAttributeChange = (index, key, value) => {
+    const updatedAttributes = [...attributes];
+      updatedAttributes[index][key] = value;
+      setAttributes(updatedAttributes);
+      setFormData({...formData, categoryDefinition: attributes});
+      console.log(formData);
+  };
+
+  const handleSubmit = () => {
+    dispatch(createCategory(formData));
+  };
 
   return (
     <Container component="main" maxWidth="md">
@@ -35,7 +52,7 @@ const CategoryForm = () => {
                     <Input 
                         name="categoryName"
                         label="Category Name"
-                        handleChange={handleChange}
+                        handleChange={(e) => handleNameChange(e.target.value)}
                         autoFocus
                     />
                 </Grid>
@@ -46,13 +63,13 @@ const CategoryForm = () => {
                       <Input
                         name={`attribute${index}Name`}
                         label={`Attribute ${index} Name`}
-                        handleChange={handleChange}
+                        handleChange={(e) => handleAttributeChange(index, 'name', e.target.value)}
                         type='text'
                       />
                       <Input
                         name={`attribute${index}Type`}
                         label={`Attribute ${index} Type`}
-                        handleChange={handleChange}
+                        handleChange={(e) => handleAttributeChange(index, 'type', e.target.value)}
                         type='text'
                       />
                     </Grid> ))
@@ -67,6 +84,18 @@ const CategoryForm = () => {
                         justifycontent='flex-end'
                     >
                         Add Attribute
+                    </Button>
+                </Grid>
+
+                <Grid item xs={12} className={classes.buttonContainer}>
+                {/* Add submit button */}
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        justifycontent='flex-start'
+                        type='submit'
+                    >
+                        Submit
                     </Button>
                 </Grid>
             </Grid>
