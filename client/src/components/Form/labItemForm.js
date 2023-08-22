@@ -76,7 +76,7 @@ const LabItemForm = () => {
     <form className={classes.form} onSubmit={handleSubmit}>
       <Grid container spacing={2}>
         <div>
-          <label htmlFor="category">Category:</label>
+          <label htmlFor="category">Category: </label>
           <select
             id="category"
             name="category"
