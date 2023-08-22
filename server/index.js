@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 import postRoutes from "./routes/posts.js";
 import userRoutes from "./routes/users.js";
 import itemRoutes from './routes/labItem.js';
+import adminRoutes from './routes/admin.js';
 
 const app = express();
 
@@ -28,6 +29,9 @@ app.use("/user", userRoutes);
 
 // item route
 app.use('/item', itemRoutes);
+
+// admin route
+app.use('/admin', adminRoutes);
 
 const CONNECTION_URL = process.env.CONNECTION_URL;
 

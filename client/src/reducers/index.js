@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import posts from './posts';
 import auth from './auth';
-import labItem from "./labItem";
+import labItem from "./labItemForm.js";
 
 /*
     combine all reducers into one root reducers through key-value pairs

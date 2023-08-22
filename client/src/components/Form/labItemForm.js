@@ -3,13 +3,14 @@ import { Provider, useSelector } from "react-redux";
 import { TextField, Button, Typography, Paper, Grid } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import { useDispatch } from "react-redux";
-import useStyles from "./styles";
 import { fetchCategoryFields } from "../../actions/labItem.js";
 
 import { updatePost, createPost } from "../../actions/posts";
-import Input from "../Auth/Input.js"; // needs to look at actions
+import Input from "../Auth/Input.js"; 
 import { configureStore } from "@reduxjs/toolkit";
-import labItemReducer from "../../reducers/labItem";
+import labItemReducer from "../../reducers/labItemForm.js";
+
+import useStyles from "../Auth/styles";
 
 const LabItemFormWrapper = () => {
   const store = configureStore({ reducer: labItemReducer });
@@ -36,7 +37,7 @@ const LabItemForm = () => {
 
   const classes = useStyles();
   const dispatch = useDispatch();
-  const fields = useSelector((itemFields) => itemFields);
+  const itemAttributes = useSelector((itemFields) => itemFields);
 
   const clear = () => {
     setFormData({
@@ -50,6 +51,8 @@ const LabItemForm = () => {
       creator: "",
     });
   };
+  
+  const handleSubmit = () => {};
 
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
@@ -70,7 +73,7 @@ const LabItemForm = () => {
   };
 
   return (
-    <form>
+    <form className={classes.form} onSubmit={handleSubmit}>
       <Grid container spacing={2}>
         <div>
           <label htmlFor="category">Category:</label>
@@ -88,20 +91,17 @@ const LabItemForm = () => {
         </div>
 
         {/* render the fields returned by the category */}
-        {console.log(fields)}
-        {fields
-          .filter((field) => field !== "_id" && field !== "__v")
-          .map((field) => {
-            console.log(field);
-
-            <div key={`${field}`}>
-              <Input
+        {
+        itemAttributes.filter((attribute) => attribute !== "_id" && attribute !== "__v")
+          .map((attribute) => (
+              <Input key={`${attribute}`}
                 type="string"
-                name={`${field}`}
+                name={`${attribute}`}
+                label={`${attribute}`}
                 handleChange={handleInputChange}
               />
-            </div>;
-          })}
+          ))
+        } 
       </Grid>
       {/* {renderAdditionalFields()} */}
       <button type="submit">Submit</button>

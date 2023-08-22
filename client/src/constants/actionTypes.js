@@ -10,3 +10,9 @@ export const LIKE = "LIKE";
 export const FAILED_LOGIN = "FAILED_LOGIN";
 export const FAILED_SIGNUP = "FAILED_SIGNUP";
 export const SWITCH_IS_SIGN_UP = 'SWITCH_IS_SIGN_UP';
+
+// item 
+export const FETCH_ITEM_FIELDS = "FETCH_ITEM_FIELDS";
+
+// admin - create new item category
+export const CREATE_ITEM_CATEGORY = "CREATE_ITEM_CATEGORY";

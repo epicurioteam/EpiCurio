@@ -24,7 +24,10 @@ export default makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end'
+  },
   passwordWarning: {
     display: 'flex',
     color: '#f02849',
