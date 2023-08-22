@@ -17,7 +17,7 @@ const CategoryForm = () => {
 
   const addAttribute = () => {
     const newAttribute = { name: '', type: '' };
-    setAttributes(...attributes, newAttribute);
+    setAttributes([...attributes, newAttribute]);
   };
 
   const handleChange = () => {};
@@ -40,10 +40,23 @@ const CategoryForm = () => {
                     />
                 </Grid>
 
-                <Grid item xs={12}>
-                    <Input
-                    />
-                </Grid>
+                {
+                  attributes.map((attribute, index) => (
+                    <Grid item xs={12} key={index} className="flex flex-row space-x-3">
+                      <Input
+                        name={`attribute${index}Name`}
+                        label={`Attribute ${index} Name`}
+                        handleChange={handleChange}
+                        type='text'
+                      />
+                      <Input
+                        name={`attribute${index}Type`}
+                        label={`Attribute ${index} Type`}
+                        handleChange={handleChange}
+                        type='text'
+                      />
+                    </Grid> ))
+                  }
 
                 <Grid item xs={12} className={classes.buttonContainer}>
                 {/* Add Attribute button */}
