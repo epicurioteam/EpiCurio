@@ -73,7 +73,7 @@ const LabItemForm = () => {
     <form>
       <Grid container spacing={2}>
         <div>
-          <label htmlFor="category">Category:</label>
+          <label htmlFor="category">Category: </label>
           <select
             id="category"
             name="category"
