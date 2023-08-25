@@ -1,23 +1,22 @@
-import mongoose from 'mongoose';
-import React from 'react'
+import mongoose from "mongoose";
+const parseAdminData = (attributeArray) => {
+  const schemaDefinition = {};
 
-const parseAdminData = (obj) =>  {
-    const schemaDefinition = {};
+  for (const attribute of attributeArray) {
+    const fieldName = attribute.name;
+    const fieldType = attribute.type;
 
-    for (const fieldName in obj) {
-        if (obj.hasOwnProperty(fieldName)) {
-            const fieldType = obj[fieldName];
-            if (fieldType === 'Number') {
-            schemaDefinition[fieldName] = Number;
-            } else if (fieldType === 'String') {
-            schemaDefinition[fieldName] = String;
-        //   } else if (/* add more type checks here */) {
-        //     // Handle other types as needed
-        //   }
-            }
-        }
+    if (fieldType === "Number") {
+      schemaDefinition[fieldName] = mongoose.Schema.Types.Number;
+    } else if (fieldType === "String") {
+      schemaDefinition[fieldName] = mongoose.Schema.Types.String;
+      // Add more conditions for other data types as needed
     }
-    return mongoose.Schema(schemaDefinition);
-}
+  }
 
-export default parseAdminData;
+  return schemaDefinition;
+};
+
+export default parseAdminData
+
+

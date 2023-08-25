@@ -5,7 +5,11 @@ import labItem from "../models/labItem.js";
 
 export const createCategory = async (req, res) => {
     const { categoryName, categoryDefinition } = req.body
-    let categorySchema = parseAdminData(categoryDefinition);
+    console.log(categoryDefinition);
+    let categorySchemaDefinition = parseAdminData(categoryDefinition);
+
+    console.log(categorySchemaDefinition);
+    const categorySchema = mongoose.Schema(categorySchemaDefinition);
 
     try {
         labItem.discriminator(categoryName, categorySchema);

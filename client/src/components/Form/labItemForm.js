@@ -60,7 +60,6 @@ const LabItemForm = () => {
   const handleCategoryChange = (e) => {
     let newCategory = e.target.value;
     setCategory(newCategory);
-    console.log(category);
     setFormData({ ...formData, category: newCategory });
   };
 
