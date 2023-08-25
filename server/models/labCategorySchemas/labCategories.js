@@ -11,9 +11,11 @@ const categorySchema = mongoose.Schema({
 
 const Category = mongoose.model('categories', categorySchema);
 
-export default 
-{
-    glassPlasticWare: glassPlasticWare,
-    electronics: electronics,
-    safetyEquipment: safetyEquipment,
-}
+// export default 
+// {
+//     glassPlasticWare: glassPlasticWare,
+//     electronics: electronics,
+//     safetyEquipment: safetyEquipment,
+// }
+
+export default Category;

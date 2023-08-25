@@ -26,3 +26,5 @@ export const fetchCategoryFields = (category) => axios.get(`${urlItem}/${categor
 export const createNewCategory = (newCategory) => axios.post(`${urlAdmin}`, newCategory);
 
 export const saveItem = (newItem) => axios.post(urlItem, newItem);
+
+export const fetchCategory = () => axios.get(`${urlAdmin}/categories`);

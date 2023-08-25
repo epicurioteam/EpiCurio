@@ -35,8 +35,9 @@ const CategoryForm = () => {
       setAttributes(updatedAttributes);
   };
 
-  const handleSubmit = () => {
+  const handleOnClick = () => {
       setFormData({...formData, categoryDefinition: attributes});
+      console.log(formData);
       dispatch(createCategory(formData)); 
   };
 
@@ -44,7 +45,7 @@ const CategoryForm = () => {
     <Container component="main" maxWidth="md">
       <Paper className={classes.paper} elevation={3}>
         <Typography variant="h5">Add New Category</Typography>
-        <form className={classes.form} onSubmit={handleSubmit}>
+        {/* <form className={classes.form} onSubmit={handleSubmit}> */}
             <Grid container spacing={2}>
                 {/* Inputs that gets rendered*/}
                 <Grid item xs={12}>
@@ -92,13 +93,13 @@ const CategoryForm = () => {
                         variant="contained"
                         color="primary"
                         justifycontent='flex-start'
-                        type='submit'
+                        onClick={handleOnClick}
                     >
                         Submit
                     </Button>
                 </Grid>
             </Grid>
-        </form>
+        {/* </form> */}
       </Paper>
     </Container>
   );

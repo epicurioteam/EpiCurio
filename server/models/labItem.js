@@ -19,21 +19,14 @@ const labItemSchema= mongoose.Schema({
             required: true
         }, 
         createdAt: {
-            type: Date,
-            default: new Date(),
+            type: String,
+            default: new Date().toDateString(),
         },
     },
     {
         discriminatorKey: 'category'
     }
 );
-
-// // Create subschemas corresponding to the lab item categories
-for (const categoryName in labItemCategorySchemas) {
-    const categorySchema = labItemCategorySchemas[categoryName];
-    // categorySchema = mongoose.schema(category.categoryDefinition);
-    labItemSchema.discriminator(categoryName, categorySchema);
-}
 
 const labItem = mongoose.model('LabItem', labItemSchema);
 

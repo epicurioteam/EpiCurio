@@ -13,6 +13,7 @@ export const SWITCH_IS_SIGN_UP = 'SWITCH_IS_SIGN_UP';
 
 // item 
 export const FETCH_ITEM_FIELDS = "FETCH_ITEM_FIELDS";
+export const FETCH_CATEGORIES = "FETCH_CATEGORIES";
 export const SAVE_ITEM = "SAVE_ITEM";
 
 // admin - create new item category
