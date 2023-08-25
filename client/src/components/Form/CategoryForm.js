@@ -33,12 +33,11 @@ const CategoryForm = () => {
     const updatedAttributes = [...attributes];
       updatedAttributes[index][key] = value;
       setAttributes(updatedAttributes);
-      setFormData({...formData, categoryDefinition: attributes});
-      console.log(formData);
   };
 
   const handleSubmit = () => {
-    dispatch(createCategory(formData));
+      setFormData({...formData, categoryDefinition: attributes});
+      dispatch(createCategory(formData)); 
   };
 
   return (

@@ -3,10 +3,10 @@ import { Provider, useSelector } from "react-redux";
 import { TextField, Button, Typography, Paper, Grid } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import { useDispatch } from "react-redux";
-import { fetchCategoryFields } from "../../actions/labItem.js";
+import { fetchCategoryFields, saveItem } from "../../actions/labItem.js";
 
 import { updatePost, createPost } from "../../actions/posts";
-import Input from "../Auth/Input.js"; 
+import Input from "../Auth/Input.js";
 import { configureStore } from "@reduxjs/toolkit";
 import labItemReducer from "../../reducers/labItemForm.js";
 
@@ -31,7 +31,6 @@ const LabItemForm = () => {
     shelf_life: "",
     vendor: "",
     description: "",
-    category: "",
     creator: "",
   });
 
@@ -51,11 +50,15 @@ const LabItemForm = () => {
       creator: "",
     });
   };
-  
-  const handleSubmit = () => {};
 
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
+  const handleSubmit = () => {
+    dispatch(saveItem(formData));
+  };
+
+  const handleCategoryChange = (e) => {
+    let newCategory = e.target.value;
+    setCategory(newCategory);
+    setFormData({ ...formData, category: newCategory });
   };
 
   useEffect(() => {
@@ -73,39 +76,49 @@ const LabItemForm = () => {
   };
 
   return (
-    <form className={classes.form} onSubmit={handleSubmit}>
+    <>
+      {/* <form className={classes.form} onSubmit={} > */}
       <Grid container spacing={2}>
         <div>
-          <label className='font-bold' htmlFor="category">Category: </label>
+          <label className="font-bold" htmlFor="category">
+            Category:{" "}
+          </label>
           <select
             id="category"
             name="category"
             value={category}
-            onChange={handleCategoryChange}
-          >
+            onChange={handleCategoryChange}>
             <option disabled>Select a category</option>
             <option value="glassPlasticWare">glassPlasticWare</option>
             <option value="electronics">electronics</option>
             <option value="safetyEquipment">safetyEquipment</option>
+            <option value="squaretriangle">squaretriangle</option>
           </select>
         </div>
 
         {/* render the fields returned by the category */}
-        {
-        itemAttributes.filter((attribute) => attribute !== "_id" && attribute !== "__v")
+        {itemAttributes
+          .filter(
+            (attribute) => 
+              attribute !== "_id" &&
+              attribute !== "createdAt" &&
+              attribute !== "__v" &&
+              attribute !== "category"
+          )
           .map((attribute) => (
-              <Input key={`${attribute}`}
-                type="string"
-                name={`${attribute}`}
-                label={`${attribute}`}
-                handleChange={handleInputChange}
-              />
-          ))
-        } 
+            <Input
+              key={`${attribute}`}
+              type="string"
+              name={`${attribute}`}
+              label={`${attribute}`}
+              handleChange={handleInputChange}
+            />
+          ))}
       </Grid>
       {/* {renderAdditionalFields()} */}
-      <button type="submit">Submit</button>
-    </form>
+      <button onClick={handleSubmit}>Submit</button>
+      {/* </form> */}
+    </>
   );
 };
 

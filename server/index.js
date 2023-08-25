@@ -20,10 +20,10 @@ app.use((req, res, next) => {
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
+dotenv.config();
 
 // All HTTP requests to the server has to go through'./posts'to reach its final endpoint.
 app.use("/posts", postRoutes);
-dotenv.config();
 
 app.use("/user", userRoutes);
 
@@ -32,6 +32,11 @@ app.use('/item', itemRoutes);
 
 // admin route
 app.use('/admin', adminRoutes);
+
+app.use((req, res, next) => {
+  console.log(`Request: ${req.method} ${req.url}`);
+  next();
+});
 
 const CONNECTION_URL = process.env.CONNECTION_URL;
 

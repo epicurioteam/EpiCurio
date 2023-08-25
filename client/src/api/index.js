@@ -24,3 +24,5 @@ export const likePost = (id) => axios.patch(`${url}/${id}/likePost`);
 export const fetchCategoryFields = (category) => axios.get(`${urlItem}/${category}`);
 
 export const createNewCategory = (newCategory) => axios.post(`${urlAdmin}`, newCategory);
+
+export const saveItem = (newItem) => axios.post(urlItem, newItem);

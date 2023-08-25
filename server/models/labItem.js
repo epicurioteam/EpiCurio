@@ -8,7 +8,7 @@ const labItemSchema= mongoose.Schema({
         name: { type: String, required: true },
         unit_quantity: { type: Number, default: 0 }, 
         location: { type: String, required: true },
-        // shelf_life: Number, 
+        shelf_life: Number, 
         vendor: String,
         // link_to_item: String,
         description: String,
@@ -22,17 +22,13 @@ const labItemSchema= mongoose.Schema({
             type: Date,
             default: new Date(),
         },
-        creator: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        }, 
     },
     {
         discriminatorKey: 'category'
     }
 );
 
-// Create subschemas corresponding to the lab item categories
+// // Create subschemas corresponding to the lab item categories
 for (const categoryName in labItemCategorySchemas) {
     const categorySchema = labItemCategorySchemas[categoryName];
     // categorySchema = mongoose.schema(category.categoryDefinition);

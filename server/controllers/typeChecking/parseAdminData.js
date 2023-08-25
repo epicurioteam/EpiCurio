@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import React from 'react'
-import mongoose from 'mongoose';
 
 const parseAdminData = (obj) =>  {
       const schemaDefinition = {};
@@ -18,7 +17,7 @@ const parseAdminData = (obj) =>  {
         }
         }
     
-      return new mongoose.Schema(schemaDefinition);
+      return mongoose.Schema(schemaDefinition);
     }
 }
 
