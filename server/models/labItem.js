@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import * as labItemCategories from '../constants/labItemCategory.js'
-import labItemCategorySchemas from './labCategorySchemas/labCategories.js';
+import labCategories from './labCategorySchemas/labCategories.js';
 
 const labItemSchema= mongoose.Schema({
 
@@ -15,7 +14,6 @@ const labItemSchema= mongoose.Schema({
         // image: URL
         category: {
             type: String,
-            enum: Object.values(labItemCategories),
             required: true
         }, 
         createdAt: {

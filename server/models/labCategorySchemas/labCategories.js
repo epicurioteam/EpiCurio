@@ -5,8 +5,14 @@ import safetyEquipment from './safetyEquipment.js';
 import mongoose from "mongoose";
 
 const categorySchema = mongoose.Schema({
-    categoryName: String, 
-    categoryDefinition: mongoose.Schema.Types.Mixed
+    categoryName: {
+        type: String,
+        unique: true
+    },
+    categoryDefinition: {
+        type: mongoose.SchemaTypes.Mixed,
+        required: true
+    }
 });
 
 const Category = mongoose.model('categories', categorySchema);

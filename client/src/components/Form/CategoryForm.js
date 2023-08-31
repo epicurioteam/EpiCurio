@@ -35,9 +35,11 @@ const CategoryForm = () => {
       setAttributes(updatedAttributes);
   };
 
+  useEffect(() => {
+    setFormData({...formData, categoryDefinition: attributes});
+  }, [attributes]);
+
   const handleOnClick = () => {
-      setFormData({...formData, categoryDefinition: attributes});
-      console.log(formData);
       dispatch(createCategory(formData)); 
   };
 

@@ -71,7 +71,7 @@ const LabItemForm = () => {
   useEffect(() => {
     if (category) {
       dispatch(fetchCategoryFields(category));
-    }
+    } 
     console.log(`${category} category fields are fetched`);
   }, [category, dispatch]);
 
@@ -97,9 +97,9 @@ const LabItemForm = () => {
             name="category"
             value={category}
             onChange={handleCategoryChange}>
-            <option disabled>Select a category</option>
+            <option value="" disabled defaultValue>Select a category</option>
             {
-              categories.map((category, index) => (
+              categories?.map((category, index) => (
                 <option key={index} value={category}>{category}</option>
               ))
             }
