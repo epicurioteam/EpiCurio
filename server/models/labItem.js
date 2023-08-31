@@ -12,17 +12,17 @@ const labItemSchema= mongoose.Schema({
         // link_to_item: String,
         description: String,
         // image: URL
-        category: {
-            type: String,
-            required: true
-        }, 
+        category: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Categories'
+        }], 
+        categoryAttributes: {
+            type: mongoose.Schema.Types.Mixed,
+        },
         createdAt: {
             type: String,
             default: new Date().toDateString(),
         },
-    },
-    {
-        discriminatorKey: 'category'
     }
 );
 

@@ -7,17 +7,19 @@ import Category from "../models/labCategorySchemas/labCategories.js";
 export const createCategory = async (req, res) => {
   const { categoryName, categoryDefinition } = req.body;
   try {
-    const newCategory = new Category({
-        categoryName,
-        categoryDefinition: categoryDefinition,
-    });
+//     const newCategory = new Category({
+//         categoryName,
+//         categoryDefinition: categoryDefinition,
+//     });
 
-    let categorySchemaDefinition = parseAdminData(categoryDefinition);
-    labItem.discriminator(categoryName, mongoose.Schema(categorySchemaDefinition))
+//     let categorySchemaDefinition = parseAdminData(categoryDefinition);
+//     labItem.discriminator(categoryName, mongoose.Schema(categorySchemaDefinition))
+
+    const newCategory = new Category({ categoryName, categoryDefinition});
 
     await newCategory.save();
 
-    res.status(200).json(newCategory);
+    res.status(201).json(newCategory);
   } catch (error) {
     res.status(409).json({ message: error.message });
     console.log(error);
