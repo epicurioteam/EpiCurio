@@ -1,20 +1,43 @@
 import labItem from "../models/labItem.js";
 import mongoose from "mongoose";
 
-export const fetchCategoryFields = async(req, res) => {
-    try {
-        const { category } = req.params;
+// Category controllers
+export const fetchCategoryFields = async (req, res) => {
+  try {
+    const { category } = req.params;
 
-        const categoryModel = mongoose.model(category);
-        const schemaPaths = Object.keys(categoryModel.schema.paths);
-        res.status(200).json(schemaPaths);
-    } catch (error) {
-      console.log(error);  
-    }
-}
+    const categoryModel = mongoose.model(category);
+    const schemaPaths = Object.keys(categoryModel.schema.paths);
+    res.status(200).json(schemaPaths);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-export const saveItem = async(req, res) => {
+// Item controllers
+export const getItems = async (req, res) => {
+  try {
+    const items = await labItem.find();
 
+    res.status(200).json(items);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const getItem = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const post = await labItem.findById(id);
+
+    res.status(200).json(item);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const saveItem = async (req, res) => {
   try {
     const newItemData = req.body;
 
@@ -28,5 +51,29 @@ export const saveItem = async(req, res) => {
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
-}
+};
 
+/* export const updateItem = async (req, res) => {
+  const { id } = req.params;
+  const { title, message, creator, selectedFile, tags } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No item with id: ${id}`);
+
+  const updatedPost = { creator, title, message, tags, selectedFile, _id: id };
+
+  await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true });
+
+  res.json(updatedPost);
+}; */
+
+export const deleteItem = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No item with id: ${id}`);
+
+  await labItem.findByIdAndRemove(id);
+
+  res.json({ message: "Item deleted successfully." });
+};

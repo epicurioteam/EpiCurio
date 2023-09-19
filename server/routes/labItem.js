@@ -1,10 +1,23 @@
-import express from 'express'; 
-import { fetchCategoryFields, saveItem }  from '../controllers/labItem.js';
+import express from "express";
+import {
+  deleteItem,
+  fetchCategoryFields,
+  getItems,
+  saveItem,
+} from "../controllers/labItem.js";
 
+const router = express.Router();
 
-const router = express.Router(); 
+// category routes
+router.get("/:category", fetchCategoryFields);
 
-router.get('/:category', fetchCategoryFields);
-router.post('/', saveItem);
+// item routes
+router.get("/", getItems);
+
+router.post("/", saveItem);
+
+// router.patch("/:id", updateItem);
+
+router.delete("/:id", deleteItem);
 
 export default router;

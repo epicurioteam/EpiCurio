@@ -1,30 +1,29 @@
 import axios from "axios";
 
-const url = "http://localhost:5000/posts";
-
 const urlItem = "http://localhost:5000/item";
 
 const urlAdmin = "http://localhost:5000/admin";
 
+// Auth
 export const signIn = (formData) => axios.post("/user/signin", formData);
 
 export const signUp = (formData) => axios.post("/user/signup", formData);
 
-export const fetchPosts = () => axios.get(url);
+// items actions
+export const fetchCategoryFields = (category) =>
+  axios.get(`${urlItem}/${category}`);
 
-export const createPost = (newPost) => axios.post(url, newPost);
-
-export const updatePost = (id, updatedPost) =>
-  axios.patch(`${url}/${id}`, updatedPost);
-
-export const deletePost = (id) => axios.delete(`${url}/${id}`);
-
-export const likePost = (id) => axios.patch(`${url}/${id}/likePost`);
-
-export const fetchCategoryFields = (category) => axios.get(`${urlItem}/${category}`);
-
-export const createNewCategory = (newCategory) => axios.post(`${urlAdmin}`, newCategory);
+export const fetchItems = () => axios.get(urlItem);
 
 export const saveItem = (newItem) => axios.post(urlItem, newItem);
+
+export const updateItem = (id, updatedItem) =>
+  axios.patch(`${urlItem}/${id}`, updatedItem);
+
+export const deleteItem = (id) => axios.delete(`${urlItem}/${id}`);
+
+// Category definition and retrieval
+export const createNewCategory = (newCategory) =>
+  axios.post(`${urlAdmin}`, newCategory);
 
 export const fetchCategory = () => axios.get(`${urlAdmin}/categories`);
