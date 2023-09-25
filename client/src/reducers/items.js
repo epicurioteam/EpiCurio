@@ -2,7 +2,7 @@ import { FETCH_ALL, CREATE, UPDATE, DELETE } from "../constants/actionTypes";
 
 export default (items = [], action) => {
   switch (action.type) {
-    case FETCH_ALL: // action.payload are the items that get fetched
+    case "FETCH_ALL": // action.payload are the items that get fetched
       return action.payload;
     case CREATE: // action.payload is the item that should get created
       return [...items, action.payload];

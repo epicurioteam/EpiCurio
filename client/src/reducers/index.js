@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
-import posts from './posts';
-import auth from './auth';
+import auth from "./auth";
+import items from "./items";
+import categoryForm from "./categoryForm";
 
 /*
     combine all reducers into one root reducers through key-value pairs
@@ -9,6 +10,7 @@ import auth from './auth';
 */
 
 export default combineReducers({
-    posts, 
-    auth,
+  items,
+  categoryForm,
+  auth,
 });

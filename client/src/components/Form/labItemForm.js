@@ -9,7 +9,6 @@ import {
   fetchCategory,
 } from "../../actions/labItem.js";
 
-import { updatePost, createPost } from "../../actions/posts";
 import Input from "../Auth/Input.js";
 import { configureStore } from "@reduxjs/toolkit";
 import labItemReducer from "../../reducers/labItemForm.js";
@@ -61,7 +60,7 @@ const LabItemForm = () => {
 
   const handleSubmit = () => {
     dispatch(saveItem(formData));
-    navigate("/form");
+    navigate("/home");
   };
 
   const handleCategoryChange = (e) => {

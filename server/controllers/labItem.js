@@ -21,7 +21,7 @@ export const getItems = async (req, res) => {
 
     res.status(200).json(items);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -29,7 +29,7 @@ export const getItem = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const post = await labItem.findById(id);
+    const item = await labItem.findById(id);
 
     res.status(200).json(item);
   } catch (error) {
