@@ -13,6 +13,7 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import { deleteItem } from "../../../actions/labItem";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 import useStyles from "./styles";
 
@@ -22,72 +23,67 @@ const Item = ({ item, setCurrentId }) => {
 
   const dispatch = useDispatch();
 
+  console.log(item);
+
   return (
-    <Card className={classes.card}>
-      <CardMedia
-        className={classes.media}
-        image={item.selectedFile}
-        title={item.title}
-      />
+    <Link to={`/item/${item._id}`}>
+      <Card className={classes.card}>
+        <CardMedia
+          className={classes.media}
+          image={item.selectedFile}
+          title={item.name}
+        />
 
-      <div className={classes.overlay}>
-        <Typography variant="h6">{item.creator}</Typography>
-        <Typography variant="body2">
-          {moment(new Date(item.createdAt)).fromNow()}
+        <div className={classes.overlay}>
+          <Typography variant="h6">{item.creator}</Typography>
+          <Typography variant="body2">
+            {moment(new Date(item.createdAt)).fromNow()}
+          </Typography>
+        </div>
+
+        {/* 'more' button that is used to edit a item */}
+        <div className={classes.overlay2}>
+          <Button
+            style={{ color: "white" }}
+            size="small"
+            onClick={() => {
+              setCurrentId(item._id);
+              console.log(`currentId changed to: ${item._id}`);
+            }}
+          >
+            <MoreHorizIcon fontSize="medium" />
+          </Button>
+        </div>
+
+        <Typography className="px-3 " variant="h5" gutterBottom>
+          {item.name}
         </Typography>
-      </div>
+        <CardContent>
+          <Typography className="my-2 py-2 text-left text-xs">
+            Category: {item.category}
+          </Typography>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            gutterBottom
+          >
+            {item.description}
+          </Typography>
+        </CardContent>
 
-      {/* 'more' button that is used to edit a item */}
-      <div className={classes.overlay2}>
-        <Button
-          style={{ color: "white" }}
-          size="small"
-          onClick={() => {
-            setCurrentId(item._id);
-            console.log(`currentId changed to: ${item._id}`);
-          }}
-        >
-          <MoreHorizIcon fontSize="medium" />
-        </Button>
-      </div>
-
-      <Typography className={classes.title} variant="h5" gutterBottom>
-        {item.title}
-      </Typography>
-      <CardContent>
-        <Typography
-          variant="body2"
-          color="textSecondary"
-          component="p"
-          gutterBottom
-        >
-          {item.message}
-        </Typography>
-      </CardContent>
-
-      <CardActions className={classes.cardActions}>
-        <Button
-          size="small"
-          color="primary"
-          onClick={() => {
-            dispatch(likeitem(item._id));
-          }}
-        >
-          <ThumbUpAltIcon fontSize="small" />
-          &nbsp; Like &nbsp;
-          {item.likeCount}
-        </Button>
-
-        <Button
-          size="small"
-          color="primary"
-          onClick={() => dispatch(deleteItem(item._id))}
-        >
-          <DeleteIcon fontSize="small" />
-          Delete
-        </Button>
-      </CardActions>
-    </Card>
+        <CardActions className={classes.cardActions}>
+          <Button
+            size="small"
+            color="primary"
+            onClick={() => dispatch(deleteItem(item._id))}
+          >
+            <DeleteIcon fontSize="small" />
+            Delete
+          </Button>
+        </CardActions>
+      </Card>
+    </Link>
   );
 };
 
