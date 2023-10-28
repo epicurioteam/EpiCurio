@@ -1,21 +1,48 @@
-import { FETCH_ALL, CREATE, UPDATE, DELETE } from "../constants/actionTypes";
+import {
+  FETCH_ALL,
+  FETCH_ITEM_DETAILS,
+  CREATE,
+  UPDATE,
+  DELETE,
+} from "../constants/actionTypes";
 
-export default (items = [], action) => {
+const initialState = {
+  itemsList: [],
+  itemDetails: null,
+};
+
+export default (state = initialState, action) => {
   switch (action.type) {
-    case "FETCH_ALL": // action.payload are the items that get fetched
-      return action.payload;
-    case CREATE: // action.payload is the item that should get created
-      return [...items, action.payload];
+    case FETCH_ALL:
+      return {
+        ...state,
+        itemsList: action.payload,
+      };
+    case FETCH_ITEM_DETAILS:
+      return {
+        ...state,
+        itemDetails: action.payload,
+      };
+    case CREATE:
+      return {
+        ...state,
+        itemsList: [...state.itemsList, action.payload],
+      };
     case UPDATE:
-      // if item is the item that gets updated, map the updated item to the newly-updated item
-      return items.map((item) =>
-        item._id === action.payload._id ? action.payload : item
-      );
+      return {
+        ...state,
+        itemsList: state.itemsList.map((item) =>
+          item._id === action.payload._id ? action.payload : item
+        ),
+      };
     case DELETE:
-      return items.filter((item) =>
-        item._id === action.payload ? null : item
-      );
+      return {
+        ...state,
+        itemsList: state.itemsList.filter(
+          (item) => item._id !== action.payload
+        ),
+      };
     default:
-      return items;
+      return state;
   }
 };

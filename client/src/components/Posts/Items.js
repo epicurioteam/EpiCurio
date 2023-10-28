@@ -8,7 +8,7 @@ import useStyles from "./styles";
 const Items = ({ setCurrentId }) => {
   // choose from the global state the 'items' object
   // Subscribe to 'items' data of the redux store so that whenever there's a change, the component re-renders.
-  const items = useSelector((state) => state.items);
+  const items = useSelector((state) => state.items.itemsList); // Access the itemsList property from the state
   const classes = useStyles();
 
   return (

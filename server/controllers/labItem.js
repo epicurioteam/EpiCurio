@@ -25,11 +25,15 @@ export const getItems = async (req, res) => {
   }
 };
 
-export const getItem = async (req, res) => {
+export const getItemDetails = async (req, res) => {
   const { id } = req.params;
 
   try {
     const item = await labItem.findById(id);
+
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
 
     res.status(200).json(item);
   } catch (error) {

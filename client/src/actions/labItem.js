@@ -3,6 +3,7 @@ import {
   FETCH_CATEGORIES,
   FETCH_ITEM_FIELDS,
   SAVE_ITEM,
+  FETCH_ITEM_DETAILS,
 } from "../constants/actionTypes.js";
 
 // Category actions
@@ -42,6 +43,19 @@ export const fetchItems = () => async (dispatch) => {
     dispatch({ type: "FETCH_ALL", payload: data });
   } catch (error) {
     console.log(error.message);
+  }
+};
+
+export const fetchItemDetails = (itemId) => async (dispatch) => {
+  try {
+    // Make an API call to fetch the details of the item with the specified itemId
+    const { data } = await api.fetchItemDetails(itemId);
+    console.log(data);
+
+    // Dispatch the item details to the reducer
+    dispatch({ type: FETCH_ITEM_DETAILS, payload: data });
+  } catch (error) {
+    console.log(error);
   }
 };
 

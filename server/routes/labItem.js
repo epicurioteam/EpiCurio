@@ -3,6 +3,7 @@ import {
   deleteItem,
   fetchCategoryFields,
   getItems,
+  getItemDetails,
   saveItem,
 } from "../controllers/labItem.js";
 
@@ -13,6 +14,7 @@ router.get("/:category", fetchCategoryFields);
 
 // item routes
 router.get("/", getItems);
+router.get("/:id", getItemDetails);
 
 router.post("/", saveItem);
 

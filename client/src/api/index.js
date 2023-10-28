@@ -15,6 +15,8 @@ export const fetchCategoryFields = (category) =>
 
 export const fetchItems = () => axios.get(urlItem);
 
+export const fetchItemDetails = (itemId) => axios.get(`${urlItem}/${itemId}`);
+
 export const saveItem = (newItem) => axios.post(urlItem, newItem);
 
 export const updateItem = (id, updatedItem) =>

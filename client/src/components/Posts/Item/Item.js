@@ -26,13 +26,18 @@ const Item = ({ item, setCurrentId }) => {
   console.log(item);
 
   return (
-    <Link to={`/item/${item._id}`}>
+    <Link
+      to={{
+        pathname: `/item/${item._id}`,
+        state: { item: item }, // Pass the item as state
+      }}
+    >
       <Card className={classes.card}>
-        <CardMedia
+        {/* <CardMedia
           className={classes.media}
           image={item.selectedFile}
           title={item.name}
-        />
+        /> */}
 
         <div className={classes.overlay}>
           <Typography variant="h6">{item.creator}</Typography>
