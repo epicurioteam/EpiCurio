@@ -1,33 +1,50 @@
-import React, { useEffect } from "react";
-import { Typography, Card, CardContent, Container } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import {
+  Typography,
+  Card,
+  CardContent,
+  Container,
+  CircularProgress,
+} from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchItemDetails } from "../../../actions/labItem";
-import { useLocation } from "react-router-dom";
 
 const ItemDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const location = useLocation();
-  //const itemDetails = location.state.item;
-  const itemDetails = useSelector((state) => state.items.itemDetails); // Access the itemDetails property from the state
-  console.log(itemDetails);
+  const [loading, setLoading] = useState(true);
+  //const [itemDetails, setItemDetails] = useState(null);
+  const itemDetails = useSelector((state) => state.items.itemDetails);
+  console.log("Item details:", itemDetails);
 
   useEffect(() => {
-    console.log("Fetching item details for ID:", id);
     dispatch(fetchItemDetails(id))
-      .then((response) => {
-        console.log("Item details response:", response);
+      .then(() => {
+        //setItemDetails(response);
+        if (itemDetails) {
+          console.log("Item details:", itemDetails);
+        }
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching item details:", error);
+        setLoading(false);
       });
   }, [dispatch, id]);
+
+  if (loading) {
+    return (
+      <Container>
+        <CircularProgress />
+      </Container>
+    );
+  }
 
   if (!itemDetails) {
     return (
       <Container>
-        <Typography variant="h5">Loading...</Typography>
+        <Typography variant="h5">Item not found.</Typography>
       </Container>
     );
   }

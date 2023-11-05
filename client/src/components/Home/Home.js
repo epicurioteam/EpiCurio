@@ -3,9 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { fetchItems } from "../../actions/labItem";
-import Items from "../Posts/Items";
 import useStyles from "./styles";
-import NavBar from "../Navbar/Navbar";
+import TableComponent from "../ItemsTable/ItemsTable";
 
 const Home = () => {
   // Object with properties that are objects that define CSS classes
@@ -27,17 +26,7 @@ const Home = () => {
     <>
       <Grow in>
         <Container>
-          <Grid
-            container
-            className={classes.mainContainer}
-            justifyContent="space-between"
-            alignItems="stretch"
-            spacing={3}
-          >
-            <Grid item xs={12} sm={7}>
-              <Items setCurrentId={setCurrentId} />
-            </Grid>
-          </Grid>
+          <TableComponent />
         </Container>
       </Grow>
     </>
