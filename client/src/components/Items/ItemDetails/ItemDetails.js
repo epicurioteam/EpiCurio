@@ -5,7 +5,11 @@ import {
   CardContent,
   Container,
   CircularProgress,
+  Box,
+  Divider,
 } from "@material-ui/core";
+import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
+import Grid from "@material-ui/core/Grid";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchItemDetails } from "../../../actions/labItem";
@@ -37,7 +41,18 @@ const ItemDetails = () => {
   if (loading) {
     return (
       <Container>
-        <CircularProgress />
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+          style={{ minHeight: "100vh" }}
+        >
+          <Grid item xs={3}>
+            <CircularProgress size={80} />
+          </Grid>
+        </Grid>
       </Container>
     );
   }
@@ -45,7 +60,19 @@ const ItemDetails = () => {
   if (!itemDetails) {
     return (
       <Container>
-        <Typography variant="h5">Item not found.</Typography>
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          minHeight="100vh"
+          textAlign="center"
+        >
+          <ErrorOutlineIcon color="secondary" style={{ fontSize: 60 }} />
+          <Typography variant="h5" color="textSecondary">
+            Item not found.
+          </Typography>
+        </Box>
       </Container>
     );
   }
@@ -54,13 +81,23 @@ const ItemDetails = () => {
     <Container>
       <Card>
         <CardContent>
-          <Typography variant="h5">{itemDetails.name}</Typography>
-          <Typography variant="subtitle1">
-            Category: {itemDetails.category}
-          </Typography>
-          <Typography variant="body1">
-            Description: {itemDetails.description}
-          </Typography>
+          <Box mb={2}>
+            <Typography variant="h4" component="div" color="textPrimary">
+              {itemDetails.name}
+            </Typography>
+          </Box>
+          <Divider />
+          <Box mt={2} mb={1}>
+            <Typography variant="h6" component="div" color="textSecondary">
+              Category: {itemDetails.category}
+            </Typography>
+          </Box>
+          <Divider />
+          <Box mt={2}>
+            <Typography variant="body1" component="div">
+              Description: {itemDetails.description}
+            </Typography>
+          </Box>
           {/* Add more item details as needed */}
         </CardContent>
       </Card>
