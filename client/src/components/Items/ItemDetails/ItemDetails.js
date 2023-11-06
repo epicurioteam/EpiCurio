@@ -19,12 +19,9 @@ const ItemDetails = () => {
   console.log("Item details:", itemDetails);
 
   useEffect(() => {
+    setLoading(true);
     dispatch(fetchItemDetails(id))
       .then(() => {
-        //setItemDetails(response);
-        if (itemDetails) {
-          console.log("Item details:", itemDetails);
-        }
         setLoading(false);
       })
       .catch((error) => {
@@ -32,6 +29,10 @@ const ItemDetails = () => {
         setLoading(false);
       });
   }, [dispatch, id]);
+
+  if (itemDetails) {
+    console.log("Item details:", itemDetails);
+  }
 
   if (loading) {
     return (

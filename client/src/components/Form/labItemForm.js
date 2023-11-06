@@ -13,7 +13,7 @@ import Input from "../Auth/Input.js";
 import { configureStore } from "@reduxjs/toolkit";
 import labItemReducer from "../../reducers/labItemForm.js";
 
-import useStyles from "../Auth/styles";
+import useStyles from "../Auth/styles.js";
 import { useNavigate } from "react-router-dom";
 
 const LabItemFormWrapper = () => {

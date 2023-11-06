@@ -9,12 +9,12 @@ import {
 
 const router = express.Router();
 
-// category routes
-router.get("/:category", fetchCategoryFields);
-
 // item routes
 router.get("/", getItems);
 router.get("/:id", getItemDetails);
+
+// category routes
+router.get("/category/:category", fetchCategoryFields);
 
 router.post("/", saveItem);
 

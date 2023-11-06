@@ -11,7 +11,7 @@ export const signUp = (formData) => axios.post("/user/signup", formData);
 
 // items actions
 export const fetchCategoryFields = (category) =>
-  axios.get(`${urlItem}/${category}`);
+  axios.get(`${urlItem}/category/${category}`);
 
 export const fetchItems = () => axios.get(urlItem);
 

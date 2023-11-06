@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { fetchItems } from "../../actions/labItem";
 import useStyles from "./styles";
-import TableComponent from "../ItemsTable/ItemsTable";
+import TableComponent from "../Items/ItemsTable/ItemsTable";
 
 const Home = () => {
   // Object with properties that are objects that define CSS classes

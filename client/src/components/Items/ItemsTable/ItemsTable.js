@@ -4,18 +4,24 @@ import { useTable } from "react-table";
 import { useNavigate } from "react-router-dom";
 
 const TableComponent = () => {
+  const navigate = useNavigate();
   const itemsList = useSelector((state) => state.items.itemsList);
   const [filter, setFilter] = useState("");
-  const navigate = useNavigate();
+  const [filters, setFilters] = useState({});
+
+  const handleFilterChange = (key, value) => {
+    setFilters((prev) => ({ ...prev, [key]: value }));
+  };
 
   const filteredData = React.useMemo(() => {
-    return itemsList.filter(
-      (item) =>
-        item.name.toLowerCase().includes(filter.toLowerCase()) ||
-        item.location.toLowerCase().includes(filter.toLowerCase()) ||
-        item.category.toLowerCase().includes(filter.toLowerCase())
+    return itemsList.filter((item) =>
+      Object.keys(filters).every((key) =>
+        String(item[key])
+          .toLowerCase()
+          .includes((filters[key] || "").toLowerCase())
+      )
     );
-  }, [itemsList, filter]);
+  }, [itemsList, filters]);
 
   const columns = React.useMemo(() => {
     if (filteredData.length > 0) {
@@ -25,6 +31,7 @@ const TableComponent = () => {
       return keys.map((key) => ({
         Header: key.charAt(0).toUpperCase() + key.slice(1),
         accessor: key,
+        id: key,
       }));
     } else {
       return [];
@@ -38,23 +45,33 @@ const TableComponent = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <input
-        type="text"
-        placeholder="Filter"
-        value={filter}
-        onChange={(e) => setFilter(e.target.value)}
-        className="w-full p-2 rounded border my-4"
-      />
       <table {...getTableProps()} className="w-full border rounded">
         <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()} className="py-2 px-4">
-                  {column.render("Header")}
-                </th>
-              ))}
-            </tr>
+          {headerGroups.map((headerGroup, index) => (
+            <React.Fragment key={index}>
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps()} className="py-2 px-4">
+                    {column.render("Header")}
+                  </th>
+                ))}
+              </tr>
+              <tr>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps()} className="py-2 px-4">
+                    <input
+                      type="text"
+                      placeholder={`Filter ${column.render("Header")}`}
+                      value={filters[column.id] || ""}
+                      onChange={(e) =>
+                        handleFilterChange(column.id, e.target.value)
+                      }
+                      className="w-full p-2 rounded border"
+                    />
+                  </th>
+                ))}
+              </tr>
+            </React.Fragment>
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
@@ -64,7 +81,7 @@ const TableComponent = () => {
               <tr
                 {...row.getRowProps()}
                 className="hover:bg-gray-100"
-                onClick={() => navigate(`/item/${row.original.id}`)}
+                onClick={() => navigate(`/item/${row.original._id}`)}
               >
                 {row.cells.map((cell) => {
                   return (

@@ -38,7 +38,6 @@ export const saveItem = (newItemData) => async (dispatch) => {
 export const fetchItems = () => async (dispatch) => {
   try {
     const { data } = await api.fetchItems();
-    console.log(data);
 
     dispatch({ type: "FETCH_ALL", payload: data });
   } catch (error) {
